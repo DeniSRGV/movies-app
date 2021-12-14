@@ -1,0 +1,57 @@
+@font-face {
+	font-family: 'inter-normal';
+	src: url('../../fonts/Inter-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'inter-bold';
+	src: url('../../fonts/Inter-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: bold;
+}
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+width: 100%;
+margin: 0;
+padding: 0;
+}
+
+
+p {
+	margin: 0;
+}
+
+@media screen and (min-width: 320px) {
+	.App {
+			width: 100%;
+			max-width: 1010px;
+			border-bottom:1px solid #fff;
+			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.App {
+			width: unset;
+			max-width: 800px;
+	}
+}
+
+@media screen and (min-width: 980px) {
+	.App {
+			max-width: 1010px;
+			margin: 0px auto;
+	} 
+}
+
+@media screen and (min-width: 1120px) {
+	.App {
+			max-width: 1010px;
+	}
+}
