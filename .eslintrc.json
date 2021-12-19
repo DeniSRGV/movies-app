@@ -27,7 +27,9 @@
     }],
     "react/state-in-constructor": ["off"],
     "react/jsx-props-no-spreading": ["off"],
-    "react/static-property-placement": "off"
+    "react/static-property-placement": "off",
+    "exceptAfterSingleLine": ["off"],
+    "no-underscore-dangle": "off"
   },
   "settings": {
     "react": {

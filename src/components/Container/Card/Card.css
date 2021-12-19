@@ -1,0 +1,146 @@
+@media screen and (min-width: 320px) {
+  
+	.card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 451px;
+    margin: 0px 0px 20px 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-img img {
+    width: 40%;
+    max-width: 183px;
+  }
+  
+  .card-img {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+  }
+  
+  .card-body {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    padding: 6px 10px 6px 10px;
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 80px;
+    margin-bottom: 7px;
+  }
+  
+  .card-title {
+    max-width: 190px;
+    font-size: 15px;
+    font-family: 'inter-bold';
+  }
+  
+
+  
+  .card-date {
+    font-family: 'inter-normal';
+    font-size: 12px;
+    margin-left: 80px;
+    margin-bottom: 9px;
+  }
+  
+
+  
+  .card-text {
+    font-family: 'inter-normal';
+    font-size: 12px;
+  }
+  
+
+}
+  
+@media screen and (min-width: 768px) {
+
+	.card {
+    height: 278px;
+    margin: 0px 0px 20px 0px;
+  }
+
+  .card-img {
+    width: 187px;
+    position: unset;
+    top: 0;
+    left: 0;
+  }
+  
+  .card-img img {
+    width: unset;
+    max-width: 185px;
+  }
+  
+  .card-body {
+    width: 268px;
+    height: 278px;
+    padding: 12px 20px 6px 20px;
+  }
+  
+  .card-header {
+    margin-left: unset;
+    margin-bottom: 7px;
+  }
+  
+  .card-date {
+    margin-left: unset;
+  }
+  
+ 
+}
+
+@media screen and (min-width: 980px) {
+  .card {
+    display: flex;
+    justify-content: center;
+    width: 451px;
+    height: 278px;
+    margin: 0px 20px 20px 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .card:nth-child(even) {
+    margin: 0 0 20px 0;
+  }
+  
+  .card:last-child {
+    margin-right: 0px;
+  }
+}
+
+@media screen and (min-width: 1120px) {
+  .card {
+    align-items: center;
+    margin: 0 35px 35px 0;
+  }
+
+  .card:nth-child(even) {
+    margin: 0 0 35px 0;
+  }
+}
+  
+.color-red {
+  border: 2px solid #e90000;
+}
+  
+.color-orange {
+  border: 2px solid #e97e00;
+}
+  
+.color-yellow {
+  border: 2px solid #e9d100;
+}
+  
+.color-lime {
+  border: 2px solid #66e900;
+}
+  

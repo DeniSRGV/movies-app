@@ -6,27 +6,31 @@ import './App.css';
 
 class App extends Component {
   MovieService = new MovieDB();
+
   state = {
 		moviesData: [],
 	};
 
-	componentMount() {
+	componentDidMount() {
+
 		this.updateMovie();
     
 	}
 
 	updateMovie() {
-		this.MovieService.getMovies().then((item) => {
+		this.MovieService.getAllMovies().then((item) => {
 				this.setState({
 					moviesData: [...item],
 				})
         
 		})
 };
+
   render(){
+	  const {moviesData} = this.state
     return (
       <div className="App">
-        <Movies/>
+        <Movies moviesData={moviesData}/>
       </div>
     );
   }
