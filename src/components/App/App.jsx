@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Movies from '../Container/Movies';
 import MovieDB from '../../services/MovieDB';
+import Spinner from '../Container/Spinner/Spinner';
+
 import './App.css';
 
 
@@ -9,6 +11,8 @@ class App extends Component {
 
   state = {
 		moviesData: [],
+		loading: true,
+		error: false,
 	};
 
 	componentDidMount() {
@@ -17,20 +21,46 @@ class App extends Component {
     
 	}
 
+	onCharLoading = ()=>  {
+        this.setState({
+            loading: true
+        })
+		
+    }
+
+	onError = () => {
+		this.setState({
+			error: true,
+			loading: false,
+		})
+	}
+
+	
+
 	updateMovie() {
+		this.onCharLoading()
 		this.MovieService.getAllMovies().then((item) => {
 				this.setState({
 					moviesData: [...item],
+					loading: false,
 				})
         
-		})
+		}).catch(this.onError)
 };
 
   render(){
-	  const {moviesData} = this.state
+	  const {moviesData, loading, error} = this.state
+	  if(loading){
+		  return <Spinner/>
+	  }
+	   
     return (
       <div className="App">
-        <Movies moviesData={moviesData}/>
+        <Movies 
+		moviesData={moviesData}
+		loading={loading}
+		error={error}
+		/>
       </div>
     );
   }

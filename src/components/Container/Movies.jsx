@@ -3,15 +3,7 @@ import PropTypes from 'prop-types'
 import Card from "./Card/Card";
 import './Movies.css'
 
-const Movies = function({ moviesData })  {
-	
-	Movies.defaultProps = {
-		moviesData: [],
-	}
-
-	Movies.propTypes = {
-		moviesData: PropTypes.arrayOf(PropTypes.object),
-	}
+const Movies = function Movies({ moviesData, loading, error }) {
 	
 	const moviesAllCard = moviesData.map(item => (
 			<Card {...item}
@@ -20,6 +12,8 @@ const Movies = function({ moviesData })  {
 				title={item.original_title}
 				releaseDate={item.release_date}
 				overview={item.overview}
+				loading={loading}
+				error={error}
 				
 			/>
 		)
@@ -32,5 +26,18 @@ const Movies = function({ moviesData })  {
 	)
 	
 }
+
+Movies.defaultProps = {
+	moviesData: [],
+	loading: true,
+	error: false,
+}
+
+Movies.propTypes = {
+	moviesData: PropTypes.arrayOf(PropTypes.object),
+	loading: PropTypes.bool,
+	error: PropTypes.bool
+}
+
 
 export default Movies

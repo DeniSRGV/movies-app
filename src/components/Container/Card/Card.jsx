@@ -1,48 +1,41 @@
-
-
 import React from "react";
-import { Button, Descriptions} from "antd";
 import PropTypes from "prop-types";
-import noImage from './no-image.png'
+import CardView from "./CardView";
+import Spinner from "../Spinner/Spinner";
+import ErrorMessage from "../ErrorMessage/ErrorMesage";
 import "./Card.css"
 
-const posterUrl = "https://image.tmdb.org/t/p/w500";
 
-const Card = function({ title, image, releaseDate, overview })  {
+const Card = function Card({ title, image, releaseDate, overview, loading, error })  {
 
-	
+	const errorMesage = error ? <ErrorMessage/> : null
+	const spinner = loading ? <Spinner/>: null;
+	const content = !(loading || error) ? 
+	<CardView
+	title={title}
+	image={image}
+	releaseDate={releaseDate}
+	overview={overview}
+	/>: null
+
 
 	return (
-		
 		<div className='card'>
-			<div className='card-img'>
-				<img src={image !== null ? posterUrl + image : noImage} alt='poster' width='100%' height='100%' />
-			</div>
-			<div className='card-body'>
-				<div className="card-header"> 
-					<span className='card__title' >{title}</span>
-				</div>
-				<div className="card-date">
-					<Descriptions.Item label="Creation Time">{releaseDate}</Descriptions.Item>
-				</div>
-				<div>
-					<Button className='movies__button' type='button' >Action</Button>
-					<Button className='movies__button' type='button' >Ganre</Button>
-				</div>
-				<div className="card-text">
-					<p>{`${overview.slice(0, 92)}...`}</p>
-				</div>
-				<div className='star'/>
-			</div>
+			{spinner}
+            {content}
+			{errorMesage}
 		</div>
 		
 	)
 }
+
 Card.defaultProps = {
     title: "absent title",
     overview: 'absent text',
     releaseDate: 'absent date',
     image: 'absent image',
+	loading: true,
+	error: false,
     
 }
 
@@ -51,5 +44,7 @@ Card.propTypes = {
     overview: PropTypes.string,
     releaseDate: PropTypes.string,
     image: PropTypes.node,
+	loading: PropTypes.bool,
+	error: PropTypes.bool,
 }
-export default Card
+export default Card;
