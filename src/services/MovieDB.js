@@ -2,11 +2,13 @@ class MovieDB {
 
      _apiKey = '46bcbac1fd2d720b1834167c094b6a96';
 
-     _apiBase = 'https://api.themoviedb.org/3/'
-	 
-     _apiQuery = 'return'
+     _apiBase = 'https://api.themoviedb.org/3/';
 
-	urlSearch = `search/movie/?api_key=${this._apiKey}&query=${this._apiQuery}`
+	value = '';
+	 
+     
+
+	urlSearch = `search/movie/?api_key=${this._apiKey}&query=`
 
 
 	async getSearchMovie(url) {
@@ -17,10 +19,22 @@ class MovieDB {
 		return  res.json()
 	};
 
-	async getAllMovies() {
-		const res = await this.getSearchMovie(this.urlSearch)
+	async getMovies(inputValue, page) {
+		const res = await this.getSearchMovie(`${this.urlSearch}${!inputValue ? "return" : inputValue}&page=${page}`)
+		return res
+	}
+
+	async getMoviesRes(inputValue, page) {
+		const res = await this.getMovies(inputValue, page)
 		return res.results
 	}
+
+	async getPage(page) {
+		const firstPage = await this.getMoviesRes(this.value, page);
+		return firstPage;
+	}
+
+	
 
 }
 export default MovieDB;

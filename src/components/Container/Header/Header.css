@@ -1,0 +1,11 @@
+.header-wrapper {
+    display: block;
+    margin: 0 auto;
+    width: 170px;
+}
+
+
+.menu-item {
+    font-size: 14px;
+    font-weight: 400;
+}
