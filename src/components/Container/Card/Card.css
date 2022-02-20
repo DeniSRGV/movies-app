@@ -1,6 +1,8 @@
 @media screen and (min-width: 320px) {
-  
-	.card {
+  .ant-rate {
+    font-size: 15px !important;
+  }
+  .card {
     position: relative;
     display: flex;
     align-items: center;
@@ -15,56 +17,79 @@
     width: 40%;
     max-width: 183px;
   }
-  
+
   .card__img {
     position: absolute;
     top: 6px;
     left: 10px;
   }
-  
+
   .card__body {
     position: relative;
     width: 100%;
     height: 250px;
     padding: 6px 10px 6px 10px;
   }
-  
+
   .card__header {
     display: flex;
     justify-content: space-between;
     margin-left: 80px;
     margin-bottom: 7px;
   }
-  
-  .card__title{
+  .card__evaluation {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: bottom;
+    font-size: 12px;
+    padding-top: 3px;
+  }
+  .card__evaluation_red {
+    border: 2px solid red;
+  }
+  .card__evaluation_orange {
+    border: 2px solid #e9d100;
+  }
+  .card__evaluation_green {
+    border: 2px solid #01f70e;
+  }
+  .star {
+    position: absolute;
+    bottom: 16px;
+  }
+
+  .card__title {
     max-width: 190px;
     font-size: 15px;
     font-family: 'inter-bold';
   }
-  
 
-  
   .card__date {
     font-family: 'inter-normal';
     font-size: 12px;
     margin-left: 80px;
     margin-bottom: 9px;
   }
-  
+  .card__genre > button {
+    height: 20px;
+    border-radius: 2px;
+    padding: 2px 3px;
+    font-size: 12px;
+    line-height: 12px;
+    margin: 0 8px 8px 0;
+  }
 
-  
   .card__text {
     font-family: 'inter-normal';
     font-size: 12px;
     margin-top: 13px;
   }
-  
-
 }
-  
-@media screen and (min-width: 768px) {
 
-	.card {
+@media screen and (min-width: 768px) {
+  .card {
     height: 278px;
     margin: 0px 0px 20px 0px;
   }
@@ -75,28 +100,28 @@
     top: 0;
     left: 0;
   }
-  
+
   .card__img img {
     width: unset;
     max-width: 185px;
   }
-  
+
   .card__body {
     width: 268px;
     height: 278px;
-    padding: 12px 20px 6px 20px;
+    padding: 12px 9px 6px 20px;
   }
-  
+  .card__text {
+    padding-right: 10px;
+  }
   .card__header {
     margin-left: unset;
     margin-bottom: 7px;
   }
-  
+
   .card__date {
     margin-left: unset;
   }
-  
- 
 }
 
 @media screen and (min-width: 980px) {
@@ -112,7 +137,7 @@
   .card:nth-child(even) {
     margin: 0 0 20px 0;
   }
-  
+
   .card:last-child {
     margin-right: 0px;
   }
@@ -128,20 +153,19 @@
     margin: 0 0 35px 0;
   }
 }
-  
+
 .color-red {
   border: 2px solid #e90000;
 }
-  
+
 .color-orange {
   border: 2px solid #e97e00;
 }
-  
+
 .color-yellow {
   border: 2px solid #e9d100;
 }
-  
+
 .color-lime {
   border: 2px solid #66e900;
 }
-  

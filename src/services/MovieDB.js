@@ -34,6 +34,10 @@ class MovieDB {
 		return firstPage;
 	}
 
+	async getGenres() {
+		const genres = await this.getSearchMovie(`genre/movie/list?api_key=${this._apiKey}&language=en-US`);
+		return genres.genres;
+	}
 	
 
 }

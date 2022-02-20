@@ -5,18 +5,26 @@ import Spinner from '../Spinner/Spinner';
 import ErrorMessage from '../ErrorMessage/ErrorMesage';
 import './Card.css';
 
-const Card = function Card({ title, image, releaseDate, overview, loading, error }) {
-  const errorMesage = error ? <ErrorMessage /> : null;
+const Card = function Card({ title, image, releaseDate, overview, loading, error, evaluation, genres, ids }) {
+  const errorMessage = error ? <ErrorMessage /> : null;
   const spinner = loading ? <Spinner /> : null;
   const content = !(loading || error) ? (
-    <CardView title={title} image={image} releaseDate={releaseDate} overview={overview} />
+    <CardView
+      title={title}
+      image={image}
+      releaseDate={releaseDate}
+      overview={overview}
+      evaluation={evaluation}
+      genres={genres}
+      ids={ids}
+    />
   ) : null;
 
   return (
     <div className="card">
       {spinner}
       {content}
-      {errorMesage}
+      {errorMessage}
     </div>
   );
 };
@@ -26,8 +34,11 @@ Card.defaultProps = {
   overview: 'absent text',
   releaseDate: 'absent date',
   image: 'absent image',
+  evaluation: 'absent evaluation',
   loading: true,
   error: false,
+  genres: [],
+  ids: [],
 };
 
 Card.propTypes = {
@@ -37,5 +48,8 @@ Card.propTypes = {
   image: PropTypes.node,
   loading: PropTypes.bool,
   error: PropTypes.bool,
+  evaluation: PropTypes.number,
+  genres: PropTypes.arrayOf(PropTypes.object),
+  ids: PropTypes.arrayOf(PropTypes.number),
 };
 export default Card;

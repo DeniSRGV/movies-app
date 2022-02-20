@@ -15,6 +15,7 @@ class App extends Component {
     loading: true,
     error: false,
     pages: 1,
+    genres: [],
   };
 
   inputSearch = debounce((event) => {
@@ -28,22 +29,33 @@ class App extends Component {
         });
       })
       .catch(this.onError);
-  }, 500);
+  }, 600);
 
   componentDidMount() {
     this.updateMovie();
+    this.getGenres();
   }
 
-  onCharLoading = () => {
-    this.setState({
-      loading: true,
-    });
+  getGenres = () => {
+    this.MovieService.getGenres()
+      .then((elem) => {
+        this.setState({
+          genres: [...elem],
+        });
+      })
+      .catch(this.onError);
   };
 
   onError = () => {
     this.setState({
       error: true,
       loading: false,
+    });
+  };
+
+  onCharLoading = () => {
+    this.setState({
+      loading: true,
     });
   };
 
@@ -72,13 +84,13 @@ class App extends Component {
   }
 
   render() {
-    const { moviesData, loading, error, pages } = this.state;
+    const { moviesData, loading, error, pages, genres } = this.state;
     const spinner = loading ? <Spinner /> : null;
     return (
       <div className="App">
         <Header inputSearch={this.inputSearch} />
         {spinner}
-        <Movies moviesData={moviesData} loading={loading} error={error} />
+        <Movies moviesData={moviesData} loading={loading} error={error} genres={genres} />
         <Paginations pages={pages} changePagination={this.changePagination} />
       </div>
     );
