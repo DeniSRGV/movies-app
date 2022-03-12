@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 
 import PropTypes from 'prop-types';
@@ -10,8 +11,10 @@ const EvaluationCard = function EvaluationCard({ evaluation }) {
   let clazzColor = 'card__evaluation';
   if (evaluation <= 3) {
     clazzColor += '	card__evaluation_red';
-  } else if (evaluation > 3 && evaluation < 7) {
+  } else if (evaluation > 3 && evaluation <= 5) {
     clazzColor += ' card__evaluation_orange';
+  } else if (evaluation > 5 && evaluation <= 7) {
+    clazzColor += ' card__evaluation_yellow';
   } else {
     clazzColor += ' card__evaluation_green';
   }
@@ -19,7 +22,21 @@ const EvaluationCard = function EvaluationCard({ evaluation }) {
   return <span className={clazzColor}>{evaluation}</span>;
 };
 
-const CardView = function CardView({ title, image, releaseDate, overview, evaluation, genres, ids }) {
+const CardView = function CardView({
+  title,
+  image,
+  releaseDate,
+  overview,
+  evaluation,
+  genres,
+  ids,
+  setCardRated,
+  changeValueRate,
+  idRate,
+  id,
+}) {
+  // eslint-disable-next-line no-shadow
+
   const imgUrl = 'https://image.tmdb.org/t/p/w500';
   const evaluationCard =
     evaluation === 0 || evaluation.length === 0 ? null : <EvaluationCard evaluation={evaluation} />;
@@ -33,6 +50,10 @@ const CardView = function CardView({ title, image, releaseDate, overview, evalua
       {elem.name}
     </Button>
   ));
+  // const runListener = (event) => {
+  //   changeValueRate(event, id);
+  //   setCardRated();
+  // };
   return (
     <>
       <div className="card__img">
@@ -50,8 +71,8 @@ const CardView = function CardView({ title, image, releaseDate, overview, evalua
         <div className="card__text">
           <p>{overview.length === 0 ? 'there is no description' : `${overview.slice(0, 104)}...`}</p>
         </div>
-        <div className="star">
-          <Rate allowHalf count={10} />
+        <div className="star" onChange={setCardRated}>
+          <Rate allowHalf count={10} defaultValue={idRate} onChange={(event) => changeValueRate(event, id)} />
         </div>
       </div>
     </>
@@ -66,6 +87,10 @@ CardView.defaultProps = {
   evaluation: '?',
   genres: '?',
   ids: '?',
+  setCardRated: () => {},
+  changeValueRate: () => {},
+  idRate: 0,
+  id: 0,
 };
 
 CardView.propTypes = {
@@ -76,6 +101,10 @@ CardView.propTypes = {
   evaluation: PropTypes.number,
   genres: PropTypes.arrayOf(PropTypes.object),
   ids: PropTypes.arrayOf(PropTypes.number),
+  setCardRated: PropTypes.func,
+  changeValueRate: PropTypes.func,
+  idRate: PropTypes.number,
+  id: PropTypes.number,
 };
 
 EvaluationCard.defaultProps = {

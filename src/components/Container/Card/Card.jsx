@@ -5,7 +5,21 @@ import Spinner from '../Spinner/Spinner';
 import ErrorMessage from '../ErrorMessage/ErrorMesage';
 import './Card.css';
 
-const Card = function Card({ title, image, releaseDate, overview, loading, error, evaluation, genres, ids }) {
+const Card = function Card({
+  title,
+  image,
+  releaseDate,
+  overview,
+  loading,
+  error,
+  evaluation,
+  genres,
+  ids,
+  setCardRated,
+  changeValueRate,
+  idRate,
+  id,
+}) {
   const errorMessage = error ? <ErrorMessage /> : null;
   const spinner = loading ? <Spinner /> : null;
   const content = !(loading || error) ? (
@@ -17,6 +31,10 @@ const Card = function Card({ title, image, releaseDate, overview, loading, error
       evaluation={evaluation}
       genres={genres}
       ids={ids}
+      setCardRated={setCardRated}
+      changeValueRate={changeValueRate}
+      idRate={idRate}
+      id={id}
     />
   ) : null;
 
@@ -39,6 +57,10 @@ Card.defaultProps = {
   error: false,
   genres: [],
   ids: [],
+  setCardRated: () => {},
+  changeValueRate: () => {},
+  idRate: 0,
+  id: 0,
 };
 
 Card.propTypes = {
@@ -51,5 +73,9 @@ Card.propTypes = {
   evaluation: PropTypes.number,
   genres: PropTypes.arrayOf(PropTypes.object),
   ids: PropTypes.arrayOf(PropTypes.number),
+  setCardRated: PropTypes.func,
+  changeValueRate: PropTypes.func,
+  idRate: PropTypes.number,
+  id: PropTypes.number,
 };
 export default Card;

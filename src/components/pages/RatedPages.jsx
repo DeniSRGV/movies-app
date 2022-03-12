@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from './Card/Card';
-import './Movies.css';
-import NoContent from './Nocontent/NoContent';
 
-const Movies = function Movies({ moviesData, loading, error, genres, setCardRated, changeValueRate }) {
-  const noContent = moviesData.length === 0 && !loading && !error ? <NoContent /> : null;
+import NoContent from '../Container/Nocontent/NoContent';
+import Card from '../Container/Card/Card';
+import '../Container/Movies.css';
 
-  const moviesAllCard = moviesData.map((item) => (
+const RatedPages = function RatedPages({ rateCard, loading, error, genres, setCardRated, changeValueRate }) {
+  const noContent = rateCard.length === 0 && !loading && !error ? <NoContent /> : null;
+
+  const RatedPagesAllCard = rateCard.map((item) => (
     <Card
       {...item}
       key={item.id}
@@ -28,14 +29,14 @@ const Movies = function Movies({ moviesData, loading, error, genres, setCardRate
 
   return (
     <div className="movies">
-      {moviesAllCard}
+      {RatedPagesAllCard}
       {noContent}
     </div>
   );
 };
 
-Movies.defaultProps = {
-  moviesData: [],
+RatedPages.defaultProps = {
+  rateCard: [],
   loading: true,
   error: false,
   genres: [],
@@ -43,8 +44,8 @@ Movies.defaultProps = {
   changeValueRate: () => {},
 };
 
-Movies.propTypes = {
-  moviesData: PropTypes.arrayOf(PropTypes.object),
+RatedPages.propTypes = {
+  rateCard: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.bool,
   genres: PropTypes.arrayOf(PropTypes.object),
@@ -52,4 +53,4 @@ Movies.propTypes = {
   changeValueRate: PropTypes.func,
 };
 
-export default Movies;
+export default RatedPages;

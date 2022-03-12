@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import { Menu } from 'antd';
-import SearchInput from './Search/SearchInput';
 import './Header.css';
 
 class Header extends Component {
@@ -14,33 +15,33 @@ class Header extends Component {
   };
 
   render() {
-    const { inputSearch } = this.props;
+    const { updateCard, mainCard } = this.props;
+
     const { current } = this.state;
 
     return (
-      <>
-        <div className="header-wrapper">
-          <Menu className="header-menu" mode="horizontal" selectedKeys={[current]} onClick={this.handleClick}>
-            <Menu.Item className="menu-item" key="1">
-              Search
-            </Menu.Item>
-            <Menu.Item className="menu-item" key="2">
-              Rated
-            </Menu.Item>
-          </Menu>
-        </div>
+      <div className="header-wrapper">
+        <Menu className="header-menu" mode="horizontal" selectedKeys={[current]} onClick={this.handleClick}>
+          <Menu.Item className="menu-item" key="1" onClick={mainCard}>
+            <Link to="/">Search</Link>
+          </Menu.Item>
 
-        <SearchInput inputSearch={inputSearch} />
-      </>
+          <Menu.Item className="menu-item" key="2" onClick={updateCard}>
+            <Link to="/rated">Rated</Link>
+          </Menu.Item>
+        </Menu>
+      </div>
     );
   }
 }
 
 Header.defaultProps = {
-  inputSearch: () => {},
+  updateCard: () => {},
+  mainCard: () => {},
 };
 
 Header.propTypes = {
-  inputSearch: PropTypes.func,
+  updateCard: PropTypes.func,
+  mainCard: PropTypes.func,
 };
 export default Header;
