@@ -2,7 +2,7 @@ class MovieDB {
 
      _apiKey = '46bcbac1fd2d720b1834167c094b6a96';
 
-     _apiBase = 'https://api.themoviedb.org/3/';
+     _apiBase = '//api.themoviedb.org/3/';
 
 	value = '';
 	 
@@ -16,13 +16,13 @@ class MovieDB {
 		if (!res.ok) {
 			throw new Error(`Could not fetch ${this._apiBase}${url}, received ${res.status}`)
 		}
-		return  res.json()
+		return  res.json();
 	};
 
-	async getMovies(inputValue, page =1) {
+	async getMovies(inputValue, page = 1) {
 		this.value = inputValue;
-		const res = await this.getSearchMovie(`${this.urlSearch}${!inputValue ? "return" : inputValue}&page=${page}`)
-		return res
+		const res = await this.getSearchMovie(`${this.urlSearch}${!inputValue ? 'return' : inputValue}&page=${page}`)
+		return res;
 	}
 
 	
