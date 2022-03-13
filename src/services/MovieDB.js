@@ -1,6 +1,6 @@
 class MovieDB {
 
-	apiBase = `http://api.themoviedb.org/3/`;
+	apiBase = `HTTPS://api.themoviedb.org/3/`;
 
      _apiKey = '46bcbac1fd2d720b1834167c094b6a96';
 
