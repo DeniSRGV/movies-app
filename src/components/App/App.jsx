@@ -5,8 +5,9 @@ import MovieDB from '../../services/MovieDB';
 import Spinner from '../Container/Spinner/Spinner';
 import Header from '../Container/Header/Header';
 import SearchInput from '../Container/Header/Search/SearchInput';
-import './App.css';
 import Paginations from '../Container/Footer/Paginations';
+
+import './App.css';
 
 class App extends Component {
   MovieService = new MovieDB();
