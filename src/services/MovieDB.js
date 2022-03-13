@@ -1,8 +1,8 @@
 class MovieDB {
 
-     _apiKey = '46bcbac1fd2d720b1834167c094b6a96';
+	apiBase = `https://api.themoviedb.org/3/`;
 
-     _apiBase = 'https://api.themoviedb.org/3/';
+     _apiKey = '46bcbac1fd2d720b1834167c094b6a96';
 
 	value = '';
 	 
@@ -12,9 +12,9 @@ class MovieDB {
 
 
 	async getSearchMovie(url) {
-		const res = await fetch(`${this._apiBase}${url}`);
+		const res = await fetch(`${this.apiBase}${url}`);
 		if (!res.ok) {
-			throw new Error(`Could not fetch ${this._apiBase}${url}, received ${res.status}`)
+			throw new Error(`Could not fetch ${this.apiBase}${url}, received ${res.status}`)
 		}
 		return  res.json()
 	};
@@ -52,7 +52,7 @@ class MovieDB {
 			"value": event
 		};
 		const rate =
-			await fetch(`${this._apiBase}movie/${id}/rating?api_key=${this._apiKey}&guest_session_id=${sessionId}`,
+			await fetch(`${this.apiBase}movie/${id}/rating?api_key=${this._apiKey}&guest_session_id=${sessionId}`,
 				{ 
 				method: "POST", 
 				body: JSON.stringify(data), 
