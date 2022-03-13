@@ -19,15 +19,13 @@ class MovieDB {
 		return  res.json()
 	};
 
-	async getMovies(inputValue, page) {
+	async getMovies(inputValue, page =1) {
+		this.value = inputValue;
 		const res = await this.getSearchMovie(`${this.urlSearch}${!inputValue ? "return" : inputValue}&page=${page}`)
 		return res
 	}
 
-	async getMoviesRes(inputValue, page = 1) {
-		const res = await this.getMovies(inputValue, page)
-		return res.results
-	}
+	
 
 	async getPage(page) {
 		const firstPage = await this.getMoviesRes(this.value, page);
@@ -44,9 +42,9 @@ class MovieDB {
 		return guestSession.guest_session_id;
 	};
 
-	async getMoviesGuestSession (sessionId){
-		const res = await this.getRequest(`guest_session/${sessionId}/rated/movies?api_key=${this._apiKey}&language=en-US&sort_by=created_at.asc`)
-		return res;
+	async getMoviesGuestSession (id){
+		const res = await this.getSearchMovie(`guest_session/${id}/rated/movies?api_key=${this._apiKey}&language=en-US&sort_by=created_at.asc`)
+		return res.results;
 	}
 
 	async postRate(event, id, sessionId) {
@@ -55,7 +53,10 @@ class MovieDB {
 		};
 		const rate =
 			await fetch(`${this._apiBase}movie/${id}/rating?api_key=${this._apiKey}&guest_session_id=${sessionId}`,
-				{ method: "POST", body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
+				{ 
+				method: "POST", 
+				body: JSON.stringify(data), 
+				headers: { 'Content-Type': 'application/json' } });
 		
 		return rate;
 	};

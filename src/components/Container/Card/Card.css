@@ -60,11 +60,12 @@
   }
   .star {
     position: absolute;
-    bottom: 16px;
+    bottom: 9px;
+    right: 10px;
   }
 
   .card__title {
-    max-width: 190px;
+    max-width: 160px;
     font-size: 15px;
     font-family: 'inter-bold';
   }
@@ -74,6 +75,9 @@
     font-size: 12px;
     margin-left: 80px;
     margin-bottom: 9px;
+  }
+  .card__genre {
+    margin: 0 8px 8px 80px;
   }
   .card__genre > button {
     height: 20px;
@@ -96,14 +100,20 @@
     height: 278px;
     margin: 0px 0px 20px 0px;
   }
-
+  .card__title {
+    max-width: 190px;
+  }
   .card__img {
     width: 187px;
     position: unset;
     top: 0;
     left: 0;
   }
+  .star {
+    bottom: 16px;
 
+    right: unset;
+  }
   .card__img img {
     width: unset;
     max-width: 185px;
@@ -123,6 +133,9 @@
   }
 
   .card__date {
+    margin-left: unset;
+  }
+  .card__genre {
     margin-left: unset;
   }
 }

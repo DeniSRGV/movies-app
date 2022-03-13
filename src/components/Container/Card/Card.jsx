@@ -15,7 +15,6 @@ const Card = function Card({
   evaluation,
   genres,
   ids,
-  setCardRated,
   changeValueRate,
   idRate,
   id,
@@ -31,7 +30,6 @@ const Card = function Card({
       evaluation={evaluation}
       genres={genres}
       ids={ids}
-      setCardRated={setCardRated}
       changeValueRate={changeValueRate}
       idRate={idRate}
       id={id}
@@ -57,7 +55,6 @@ Card.defaultProps = {
   error: false,
   genres: [],
   ids: [],
-  setCardRated: () => {},
   changeValueRate: () => {},
   idRate: 0,
   id: 0,
@@ -73,7 +70,6 @@ Card.propTypes = {
   evaluation: PropTypes.number,
   genres: PropTypes.arrayOf(PropTypes.object),
   ids: PropTypes.arrayOf(PropTypes.number),
-  setCardRated: PropTypes.func,
   changeValueRate: PropTypes.func,
   idRate: PropTypes.number,
   id: PropTypes.number,

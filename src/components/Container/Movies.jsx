@@ -4,9 +4,7 @@ import Card from './Card/Card';
 import './Movies.css';
 import NoContent from './Nocontent/NoContent';
 
-const Movies = function Movies({ moviesData, loading, error, genres, setCardRated, changeValueRate }) {
-  const noContent = moviesData.length === 0 && !loading && !error ? <NoContent /> : null;
-
+const Movies = function Movies({ moviesData, loading, error, genres, changeValueRate }) {
   const moviesAllCard = moviesData.map((item) => (
     <Card
       {...item}
@@ -20,11 +18,11 @@ const Movies = function Movies({ moviesData, loading, error, genres, setCardRate
       evaluation={item.vote_average}
       genres={genres}
       ids={item.genre_ids}
-      setCardRated={() => setCardRated(item, item.id)}
       changeValueRate={changeValueRate}
       idRate={item.rating}
     />
   ));
+  const noContent = moviesData.length === 0 && !loading && !error ? <NoContent /> : null;
 
   return (
     <div className="movies">
@@ -39,7 +37,6 @@ Movies.defaultProps = {
   loading: true,
   error: false,
   genres: [],
-  setCardRated: () => {},
   changeValueRate: () => {},
 };
 
@@ -48,7 +45,6 @@ Movies.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
   genres: PropTypes.arrayOf(PropTypes.object),
-  setCardRated: PropTypes.func,
   changeValueRate: PropTypes.func,
 };
 
