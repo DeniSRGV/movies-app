@@ -17,7 +17,7 @@ class App extends Component {
     error: false,
     pages: 1,
     genres: [],
-    sessionId: '',
+    sessionId: 1,
     rate: false,
   };
 
