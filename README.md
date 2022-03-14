@@ -1,2 +1,1 @@
- movies-app
-https://movies-app-three-rho.vercel.app/
+movies-app https://movies-app-seven-liart.vercel.app/
