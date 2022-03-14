@@ -26,7 +26,7 @@ class MovieDB {
   }
 
   async getPage(page) {
-    const firstPage = await this.getMoviesRes(this.value, page)
+    const firstPage = await this.getMovies(this.value, page)
     return firstPage
   }
 

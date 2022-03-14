@@ -79,7 +79,7 @@ class App extends Component {
     this.MovieService.getPage(page)
       .then((elem) => {
         this.setState({
-          moviesData: [...elem],
+          moviesData: [...elem.results],
           loading: false,
           pages: page
         })
@@ -152,7 +152,11 @@ class App extends Component {
           changeValueRate={this.changeValueRate}
         />
 
-        <Paginations pages={pages} changePagination={this.changePagination} />
+        <Paginations
+          pages={pages}
+          changePagination={this.changePagination}
+          moviesData={moviesData}
+        />
       </div>
     )
   }
