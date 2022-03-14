@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import CardView from './CardView';
-import Spinner from '../Spinner/Spinner';
-import ErrorMessage from '../ErrorMessage/ErrorMesage';
-import './Card.css';
+import React from 'react'
+import PropTypes from 'prop-types'
+import CardView from './CardView'
+import Spinner from '../Spinner/Spinner'
+import ErrorMessage from '../ErrorMessage/ErrorMesage'
+import './Card.css'
 
 const Card = function Card({
   title,
@@ -17,10 +17,10 @@ const Card = function Card({
   ids,
   changeValueRate,
   idRate,
-  id,
+  id
 }) {
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const spinner = loading ? <Spinner /> : null;
+  const errorMessage = error ? <ErrorMessage /> : null
+  const spinner = loading ? <Spinner /> : null
   const content = !(loading || error) ? (
     <CardView
       title={title}
@@ -34,7 +34,7 @@ const Card = function Card({
       idRate={idRate}
       id={id}
     />
-  ) : null;
+  ) : null
 
   return (
     <div className="card">
@@ -42,8 +42,8 @@ const Card = function Card({
       {content}
       {errorMessage}
     </div>
-  );
-};
+  )
+}
 
 Card.defaultProps = {
   title: 'absent title',
@@ -57,8 +57,8 @@ Card.defaultProps = {
   ids: [],
   changeValueRate: () => {},
   idRate: 0,
-  id: 0,
-};
+  id: 0
+}
 
 Card.propTypes = {
   title: PropTypes.string,
@@ -72,6 +72,6 @@ Card.propTypes = {
   ids: PropTypes.arrayOf(PropTypes.number),
   changeValueRate: PropTypes.func,
   idRate: PropTypes.number,
-  id: PropTypes.number,
-};
-export default Card;
+  id: PropTypes.number
+}
+export default Card

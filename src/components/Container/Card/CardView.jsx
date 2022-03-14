@@ -1,25 +1,25 @@
-import React from 'react';
+import React from 'react'
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-import { Button, Descriptions, Rate } from 'antd';
+import { Button, Descriptions, Rate } from 'antd'
 
-import noImage from './no-image.png';
+import noImage from './no-image.png'
 
 const EvaluationCard = function EvaluationCard({ evaluation }) {
-  let clazzColor = 'card__evaluation';
+  let clazzColor = 'card__evaluation'
   if (evaluation <= 3) {
-    clazzColor += '	card__evaluation_red';
+    clazzColor += '	card__evaluation_red'
   } else if (evaluation > 3 && evaluation <= 5) {
-    clazzColor += ' card__evaluation_orange';
+    clazzColor += ' card__evaluation_orange'
   } else if (evaluation > 5 && evaluation <= 7) {
-    clazzColor += ' card__evaluation_yellow';
+    clazzColor += ' card__evaluation_yellow'
   } else {
-    clazzColor += ' card__evaluation_green';
+    clazzColor += ' card__evaluation_green'
   }
 
-  return <span className={clazzColor}>{evaluation}</span>;
-};
+  return <span className={clazzColor}>{evaluation}</span>
+}
 
 const CardView = function CardView({
   title,
@@ -31,25 +31,32 @@ const CardView = function CardView({
   ids,
   changeValueRate,
   idRate,
-  id,
+  id
 }) {
-  const imgUrl = 'https://image.tmdb.org/t/p/w500';
+  const imgUrl = 'https://image.tmdb.org/t/p/w500'
   const evaluationCard =
-    evaluation === 0 || evaluation.length === 0 ? null : <EvaluationCard evaluation={evaluation} />;
+    evaluation === 0 || evaluation.length === 0 ? null : (
+      <EvaluationCard evaluation={evaluation} />
+    )
   const filterG = genres.reduce((acc, el) => {
-    if (ids.some((elemID) => elemID === el.id)) acc.push(el);
-    return acc;
-  }, []);
+    if (ids.some((elemID) => elemID === el.id)) acc.push(el)
+    return acc
+  }, [])
 
   const btnGenre = filterG.map((elem) => (
     <Button className="movies__button" type="button" key={elem.id}>
       {elem.name}
     </Button>
-  ));
+  ))
   return (
     <>
       <div className="card__img">
-        <img src={image !== null ? imgUrl + image : noImage} alt="poster-img" width="100%" height="100%" />
+        <img
+          src={image !== null ? imgUrl + image : noImage}
+          alt="poster-img"
+          width="100%"
+          height="100%"
+        />
       </div>
       <div className="card__body">
         <div className="card__header">
@@ -57,19 +64,30 @@ const CardView = function CardView({
           {evaluationCard}
         </div>
         <div className="card__date">
-          <Descriptions.Item label="Creation Time">{releaseDate}</Descriptions.Item>
+          <Descriptions.Item label="Creation Time">
+            {releaseDate}
+          </Descriptions.Item>
         </div>
         <div className="card__genre">{genres !== 0 ? btnGenre : null}</div>
         <div className="card__text">
-          <p>{overview.length === 0 ? 'there is no description' : `${overview.slice(0, 104)}...`}</p>
+          <p>
+            {overview.length === 0
+              ? 'there is no description'
+              : `${overview.slice(0, 104)}...`}
+          </p>
         </div>
         <div className="star">
-          <Rate allowHalf count={10} defaultValue={idRate} onChange={(event) => changeValueRate(event, id)} />
+          <Rate
+            allowHalf
+            count={10}
+            defaultValue={idRate}
+            onChange={(event) => changeValueRate(event, id)}
+          />
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 CardView.defaultProps = {
   title: 'absent title',
@@ -81,8 +99,8 @@ CardView.defaultProps = {
   ids: '?',
   changeValueRate: () => {},
   idRate: 0,
-  id: 0,
-};
+  id: 0
+}
 
 CardView.propTypes = {
   title: PropTypes.string,
@@ -94,13 +112,13 @@ CardView.propTypes = {
   ids: PropTypes.arrayOf(PropTypes.number),
   changeValueRate: PropTypes.func,
   idRate: PropTypes.number,
-  id: PropTypes.number,
-};
+  id: PropTypes.number
+}
 
 EvaluationCard.defaultProps = {
-  evaluation: '?',
-};
+  evaluation: '?'
+}
 EvaluationCard.propTypes = {
-  evaluation: PropTypes.number,
-};
-export default CardView;
+  evaluation: PropTypes.number
+}
+export default CardView

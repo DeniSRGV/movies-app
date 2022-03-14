@@ -1,8 +1,8 @@
-import React from "react";
-import {Alert} from 'antd';
+import React from 'react'
+import { Alert } from 'antd'
 
 const ErrorMessage = function ErrorMesage() {
   return <Alert message="Error" type="error" showIcon />
 }
 
-export default ErrorMessage;
+export default ErrorMessage

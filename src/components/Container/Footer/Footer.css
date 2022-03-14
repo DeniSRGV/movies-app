@@ -1,8 +1,8 @@
-.pagination{
-    display: flex;
-    justify-content: center;
+.pagination {
+  display: flex;
+  justify-content: center;
 }
 .ant-pagination-item-active a {
-    color: #fff !important;
-    background-color: #1890ff;
+  color: #fff !important;
+  background-color: #1890ff;
 }
