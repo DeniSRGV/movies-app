@@ -1,1 +1,3 @@
-movies-app https://movies-app-seven-liart.vercel.app/
+[Demo](https://movies-app-dsrgv.vercel.app/)
+
+![](preview.png?raw=true)
