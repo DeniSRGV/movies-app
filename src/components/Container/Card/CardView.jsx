@@ -79,6 +79,7 @@ const CardView = function CardView({
         <div className="star">
           <Rate
             allowHalf
+            allowClear={false}
             count={10}
             defaultValue={idRate}
             onChange={(event) => changeValueRate(event, id)}

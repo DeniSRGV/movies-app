@@ -1,3 +1,5 @@
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
@@ -5,28 +7,19 @@ import { Menu } from 'antd'
 import './Header.css'
 
 class Header extends Component {
-  state = {
-    current: '1'
-  }
-
-  handleClick = (event) => {
-    this.setState({ current: event.key })
-  }
-
   render() {
-    const { updateMainCard, updateRateCard } = this.props
-
-    const { current } = this.state
+    const { updateRateCard, tab, handleTabs } = this.props
 
     return (
       <div className="header-wrapper">
         <Menu
           className="header-menu"
           mode="horizontal"
-          selectedKeys={[current]}
-          onClick={this.handleClick}
+          defaultSelectedKeys={[tab]}
+          selectedKeys={[tab]}
+          onClick={handleTabs}
         >
-          <Menu.Item className="menu-item" key="1" onClick={updateMainCard}>
+          <Menu.Item className="menu-item" key="1">
             Search
           </Menu.Item>
 
@@ -40,12 +33,14 @@ class Header extends Component {
 }
 
 Header.defaultProps = {
-  updateMainCard: () => {},
-  updateRateCard: () => {}
+  updateRateCard: () => {},
+  tab: '1',
+  handleTabs: () => {}
 }
 
 Header.propTypes = {
-  updateMainCard: PropTypes.func,
-  updateRateCard: PropTypes.func
+  updateRateCard: PropTypes.func,
+  tab: PropTypes.string,
+  handleTabs: PropTypes.func
 }
 export default Header

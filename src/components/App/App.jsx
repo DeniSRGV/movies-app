@@ -2,29 +2,36 @@ import React, { Component } from 'react'
 import { debounce } from 'lodash'
 import Movies from '../Container/Movies'
 import MovieDB from '../../services/MovieDB'
-import Spinner from '../Container/Spinner/Spinner'
 import Header from '../Container/Header/Header'
 import SearchInput from '../Container/Header/Search/SearchInput'
 import Paginations from '../Container/Footer/Paginations'
 
 import './App.css'
+import Spinner from '../Container/Spinner/Spinner'
 
 class App extends Component {
   MovieService = new MovieDB()
 
   state = {
     moviesData: [],
+    ratedMoviesData: [],
     loading: true,
     error: false,
     pages: 1,
     genres: [],
     sessionId: 1,
-    rate: false
+    rate: false,
+    tab: '1',
+    querySearch: 'return'
   }
 
   inputSearch = debounce((event) => {
-    const target = event.target.value
-    this.MovieService.getMovies(target)
+    this.setState({
+      querySearch: event.target.value
+    })
+    const { querySearch } = this.state
+
+    this.MovieService.getMovies(querySearch)
       .then((elem) => {
         this.setState({
           moviesData: [...elem.results],
@@ -40,6 +47,10 @@ class App extends Component {
     this.updateMovie()
     this.getGenres()
     this.getNewGuestSession()
+  }
+
+  componentDidCatch() {
+    this.onError()
   }
 
   getNewGuestSession = () => {
@@ -76,7 +87,9 @@ class App extends Component {
   }
 
   changePagination = (page) => {
-    this.MovieService.getPage(page)
+    const { querySearch } = this.state
+
+    this.MovieService.getPage(querySearch, page)
       .then((elem) => {
         this.setState({
           moviesData: [...elem.results],
@@ -85,6 +98,10 @@ class App extends Component {
         })
       })
       .catch(this.onError)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
   }
   // 2
 
@@ -94,29 +111,22 @@ class App extends Component {
     this.MovieService.getMoviesGuestSession(sessionId)
       .then((item) => {
         this.setState({
-          moviesData: [...item],
+          ratedMoviesData: [...item],
           loading: false,
           rate: true
         })
       })
       .catch(this.onError)
   }
-  // 1
 
-  updateMainCard = () => {
-    this.MovieService.getMovies()
-      .then((item) => {
-        this.setState({
-          moviesData: [...item.results],
-          loading: false,
-          rate: false
-        })
-      })
-      .catch(this.onError)
+  handleTabs = (event) => {
+    this.setState({ tab: event.key })
   }
 
-  updateMovie() {
-    this.MovieService.getMovies()
+  updateMovie = () => {
+    const { querySearch } = this.state
+
+    this.MovieService.getMovies(querySearch)
       .then((item) => {
         this.setState({
           moviesData: [...item.results],
@@ -128,35 +138,50 @@ class App extends Component {
   }
 
   render() {
-    const { moviesData, loading, error, pages, genres, rate } = this.state
-    const spinner = loading ? <Spinner /> : null
-    const searchInput = !rate ? (
-      <SearchInput inputSearch={this.inputSearch} />
-    ) : null
+    const {
+      moviesData,
+      loading,
+      error,
+      pages,
+      genres,
+      rate,
+      tab,
+      ratedMoviesData
+    } = this.state
+    const searchInput =
+      tab === '1' ? <SearchInput inputSearch={this.inputSearch} /> : null
 
     return (
       <div className="App">
         <Header
-          updateMainCard={this.updateMainCard}
+          handleTabs={this.handleTabs}
           rate={rate}
           updateRateCard={this.updateRateCard}
+          tab={tab}
         />
         {searchInput}
-        {spinner}
 
-        <Movies
-          moviesData={moviesData}
-          loading={loading}
-          error={error}
-          genres={genres}
-          changeValueRate={this.changeValueRate}
-        />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Movies
+            moviesData={moviesData}
+            loading={loading}
+            error={error}
+            genres={genres}
+            changeValueRate={this.changeValueRate}
+            tab={tab}
+            ratedMoviesData={ratedMoviesData}
+          />
+        )}
 
-        <Paginations
-          pages={pages}
-          changePagination={this.changePagination}
-          moviesData={moviesData}
-        />
+        {tab === '1' && !error ? (
+          <Paginations
+            pages={pages}
+            changePagination={this.changePagination}
+            moviesData={moviesData}
+          />
+        ) : null}
       </div>
     )
   }

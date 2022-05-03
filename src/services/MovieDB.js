@@ -3,9 +3,7 @@ class MovieDB {
 
   _apiKey = '46bcbac1fd2d720b1834167c094b6a96'
 
-  value = ''
-
-  urlSearch = `search/movie/?api_key=${this._apiKey}&query=`
+  urlSearch = `search/movie?api_key=${this._apiKey}&query=%22`
 
   async getSearchMovie(url) {
     const res = await fetch(`${this.apiBase}${url}`)
@@ -17,16 +15,17 @@ class MovieDB {
     return res.json()
   }
 
-  async getMovies(inputValue, page = 1) {
-    this.value = inputValue
+  async getMovies(query, page = 1) {
     const res = await this.getSearchMovie(
-      `${this.urlSearch}${!inputValue ? 'return' : inputValue}&page=${page}`
+      `${this.urlSearch}${query}&page=${page}`
     )
     return res
   }
 
-  async getPage(page) {
-    const firstPage = await this.getMovies(this.value, page)
+  async getPage(query, page) {
+    const firstPage = await this.getSearchMovie(
+      `${this.urlSearch}${query}&page=${page}`
+    )
     return firstPage
   }
 
@@ -52,6 +51,10 @@ class MovieDB {
   }
 
   async postRate(event, id, sessionId) {
+    if (event === undefined) {
+      return 0
+    }
+
     const data = {
       'value': event
     }
@@ -63,7 +66,6 @@ class MovieDB {
         headers: { 'Content-Type': 'application/json' }
       }
     )
-
     return rate
   }
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CardView from './CardView'
 import Spinner from '../Spinner/Spinner'
-import ErrorMessage from '../ErrorMessage/ErrorMesage'
 import './Card.css'
 
 const Card = function Card({
@@ -19,8 +18,7 @@ const Card = function Card({
   idRate,
   id
 }) {
-  const errorMessage = error ? <ErrorMessage /> : null
-  const spinner = loading ? <Spinner /> : null
+  // const spinner = loading ? <Spinner /> : null
   const content = !(loading || error) ? (
     <CardView
       title={title}
@@ -34,13 +32,14 @@ const Card = function Card({
       idRate={idRate}
       id={id}
     />
-  ) : null
+  ) : (
+    <Spinner />
+  )
 
   return (
     <div className="card">
-      {spinner}
+      {/* {spinner} */}
       {content}
-      {errorMessage}
     </div>
   )
 }

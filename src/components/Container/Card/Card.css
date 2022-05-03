@@ -2,6 +2,10 @@
   .ant-rate {
     font-size: 15px !important;
   }
+  .ant-alert {
+    width: 100% !important;
+    text-align: center !important;
+  }
   .card {
     position: relative;
     display: flex;
@@ -11,8 +15,16 @@
     max-width: 451px;
     margin: 0px 0px 20px 0px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    animation: show 1.5s;
   }
-
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   .card__img img {
     width: 40%;
     max-width: 183px;

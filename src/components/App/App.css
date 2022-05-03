@@ -39,6 +39,7 @@ p {
   .App {
     width: unset;
     max-width: 800px;
+    margin: 0px auto;
   }
 }
 
