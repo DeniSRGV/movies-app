@@ -16,6 +16,8 @@ const Movies = function Movies({
   tab,
   ratedMoviesData
 }) {
+  let noContent
+
   const createMovieCards = (movieArr) =>
     movieArr.map((item) => (
       <Card
@@ -35,11 +37,6 @@ const Movies = function Movies({
       />
     ))
 
-  const moviesElems =
-    tab === '1' && !error
-      ? createMovieCards(moviesData)
-      : createMovieCards(ratedMoviesData)
-  let noContent
   if (!loading && !error) {
     if (moviesData.length === 0) noContent = <NoContent />
   }
@@ -51,12 +48,15 @@ const Movies = function Movies({
     />
   ) : null
   const spinner = loading ? <Spinner /> : null
-
+  const moviesElems =
+    tab === '1'
+      ? createMovieCards(moviesData)
+      : createMovieCards(ratedMoviesData)
   return (
     <div className="movies">
       {errorMessage}
-      {moviesElems}
       {noContent}
+      {!error && moviesElems}
       {spinner}
     </div>
   )
@@ -65,8 +65,8 @@ const Movies = function Movies({
 Movies.defaultProps = {
   moviesData: [],
   ratedMoviesData: [],
-  loading: true,
-  error: false,
+  loading: false,
+  error: true,
   genres: [],
   changeValueRate: () => {},
   tab: '1'

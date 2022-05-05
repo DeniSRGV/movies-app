@@ -30,7 +30,6 @@ class App extends Component {
       querySearch: event.target.value
     })
     const { querySearch } = this.state
-
     this.MovieService.getMovies(querySearch)
       .then((elem) => {
         this.setState({
@@ -47,6 +46,14 @@ class App extends Component {
     this.updateMovie()
     this.getGenres()
     this.getNewGuestSession()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { querySearch } = this.state
+    if (querySearch !== prevState.querySearch) {
+      this.updateMovie()
+      this.getGenres()
+    }
   }
 
   componentDidCatch() {
