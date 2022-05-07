@@ -9,7 +9,7 @@ const Paginations = function Paginations({
   changePagination,
   moviesData
 }) {
-  const pagination = moviesData.length !== 0 && (
+  const pagination = moviesData?.length !== 0 && (
     <Pagination
       defaultCurrent={pages}
       size="small"

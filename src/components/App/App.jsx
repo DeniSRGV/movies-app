@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { debounce } from 'lodash'
-import Movies from '../Container/Movies'
+import Movies from '../Movies'
 import MovieDB from '../../services/MovieDB'
-import Header from '../Container/Header/Header'
-import SearchInput from '../Container/Header/Search/SearchInput'
-import Paginations from '../Container/Footer/Paginations'
+import Header from '../Header/Header'
+import SearchInput from '../Header/Search/SearchInput'
+import Paginations from '../Footer/Paginations'
 
 import './App.css'
-import Spinner from '../Container/Spinner/Spinner'
+import Spinner from '../Spinner/Spinner'
 
 class App extends Component {
   MovieService = new MovieDB()
@@ -27,7 +27,8 @@ class App extends Component {
 
   inputSearch = debounce((event) => {
     this.setState({
-      querySearch: event.target.value
+      querySearch: event.target.value,
+      loading: true
     })
     const { querySearch } = this.state
     this.MovieService.getMovies(querySearch)
@@ -36,7 +37,8 @@ class App extends Component {
           moviesData: [...elem.results],
           loading: false,
           pages: 1,
-          rate: false
+          rate: false,
+          error: false
         })
       })
       .catch(this.onError)
@@ -46,14 +48,6 @@ class App extends Component {
     this.updateMovie()
     this.getGenres()
     this.getNewGuestSession()
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { querySearch } = this.state
-    if (querySearch !== prevState.querySearch) {
-      this.updateMovie()
-      this.getGenres()
-    }
   }
 
   componentDidCatch() {
@@ -151,12 +145,15 @@ class App extends Component {
       error,
       pages,
       genres,
+      querySearch,
       rate,
       tab,
       ratedMoviesData
     } = this.state
     const searchInput =
-      tab === '1' ? <SearchInput inputSearch={this.inputSearch} /> : null
+      tab === '1' ? (
+        <SearchInput inputSearch={this.inputSearch} querySearch={querySearch} />
+      ) : null
 
     return (
       <div className="App">
@@ -167,7 +164,6 @@ class App extends Component {
           tab={tab}
         />
         {searchInput}
-
         {loading ? (
           <Spinner />
         ) : (

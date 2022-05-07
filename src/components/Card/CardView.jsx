@@ -6,21 +6,6 @@ import { Button, Descriptions, Rate } from 'antd'
 
 import noImage from './no-image.png'
 
-const EvaluationCard = function EvaluationCard({ evaluation }) {
-  let clazzColor = 'card__evaluation'
-  if (evaluation <= 3) {
-    clazzColor += '	card__evaluation_red'
-  } else if (evaluation > 3 && evaluation <= 5) {
-    clazzColor += ' card__evaluation_orange'
-  } else if (evaluation > 5 && evaluation <= 7) {
-    clazzColor += ' card__evaluation_yellow'
-  } else {
-    clazzColor += ' card__evaluation_green'
-  }
-
-  return <span className={clazzColor}>{evaluation}</span>
-}
-
 const CardView = function CardView({
   title,
   image,
@@ -89,15 +74,29 @@ const CardView = function CardView({
     </>
   )
 }
+const EvaluationCard = function EvaluationCard({ evaluation }) {
+  let clazzColor = 'card__evaluation'
+  if (evaluation <= 3) {
+    clazzColor += '	card__evaluation_red'
+  } else if (evaluation > 3 && evaluation <= 5) {
+    clazzColor += ' card__evaluation_orange'
+  } else if (evaluation > 5 && evaluation <= 7) {
+    clazzColor += ' card__evaluation_yellow'
+  } else {
+    clazzColor += ' card__evaluation_green'
+  }
+
+  return <span className={clazzColor}>{evaluation}</span>
+}
 
 CardView.defaultProps = {
   title: 'absent title',
   overview: 'absent text',
   releaseDate: 'absent date',
   image: 'absent image',
-  evaluation: '?',
-  genres: '?',
-  ids: '?',
+  evaluation: 0,
+  genres: [],
+  ids: [],
   changeValueRate: () => {},
   idRate: 0,
   id: 0
@@ -117,7 +116,7 @@ CardView.propTypes = {
 }
 
 EvaluationCard.defaultProps = {
-  evaluation: '?'
+  evaluation: 0
 }
 EvaluationCard.propTypes = {
   evaluation: PropTypes.number

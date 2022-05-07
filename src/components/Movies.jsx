@@ -1,11 +1,9 @@
 import React from 'react'
-import { Alert } from 'antd'
-
 import PropTypes from 'prop-types'
+import { Alert } from 'antd'
 import Card from './Card/Card'
-import './Movies.css'
 import NoContent from './Nocontent/NoContent'
-import Spinner from './Spinner/Spinner'
+import './Movies.css'
 
 const Movies = function Movies({
   moviesData,
@@ -38,7 +36,7 @@ const Movies = function Movies({
     ))
 
   if (!loading && !error) {
-    if (moviesData.length === 0) noContent = <NoContent />
+    if (moviesData?.length === 0) noContent = <NoContent />
   }
   const errorMessage = error ? (
     <Alert
@@ -47,7 +45,6 @@ const Movies = function Movies({
       description="Error while downloading movies"
     />
   ) : null
-  const spinner = loading ? <Spinner /> : null
   const moviesElems =
     tab === '1'
       ? createMovieCards(moviesData)
@@ -57,7 +54,6 @@ const Movies = function Movies({
       {errorMessage}
       {noContent}
       {!error && moviesElems}
-      {spinner}
     </div>
   )
 }
