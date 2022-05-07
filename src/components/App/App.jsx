@@ -7,7 +7,6 @@ import SearchInput from '../Header/Search/SearchInput'
 import Paginations from '../Footer/Paginations'
 
 import './App.css'
-import Spinner from '../Spinner/Spinner'
 
 class App extends Component {
   MovieService = new MovieDB()
@@ -15,33 +14,31 @@ class App extends Component {
   state = {
     moviesData: [],
     ratedMoviesData: [],
-    loading: true,
-    error: false,
     pages: 1,
     genres: [],
     sessionId: 1,
     rate: false,
     tab: '1',
-    querySearch: 'return'
+    querySearch: 'return',
+    process: 'loading'
   }
 
   inputSearch = debounce((event) => {
     this.setState({
-      querySearch: event.target.value,
-      loading: true
+      querySearch: event.target.value
     })
+    this.handleProcess('loading')
     const { querySearch } = this.state
     this.MovieService.getMovies(querySearch)
       .then((elem) => {
         this.setState({
           moviesData: [...elem.results],
-          loading: false,
           pages: 1,
-          rate: false,
-          error: false
+          rate: false
         })
       })
-      .catch(this.onError)
+      .then(() => this.handleProcess('confirmed'))
+      .catch(() => this.handleProcess('error'))
   }, 600)
 
   componentDidMount() {
@@ -50,24 +47,22 @@ class App extends Component {
     this.getNewGuestSession()
   }
 
-  componentDidCatch() {
-    this.onError()
-  }
-
   getNewGuestSession = () => {
     this.MovieService.getGuestSessionNew()
       .then((result) => {
         this.setState({
-          sessionId: result,
-          loading: false
+          sessionId: result
         })
       })
-      .catch(this.onError)
+      .then(() => this.handleProcess('confirmed'))
+      .catch(() => this.handleProcess('error'))
   }
 
   changeValueRate = (event, id) => {
     const { sessionId } = this.state
-    this.MovieService.postRate(event, id, sessionId).catch(this.anError)
+    this.MovieService.postRate(event, id, sessionId).catch(() =>
+      this.handleProcess('error')
+    )
   }
 
   getGenres = () => {
@@ -77,14 +72,8 @@ class App extends Component {
           genres: [...elem]
         })
       })
-      .catch(this.onError)
-  }
-
-  onError = () => {
-    this.setState({
-      error: true,
-      loading: false
-    })
+      .then(() => this.handleProcess('confirmed'))
+      .catch(() => this.handleProcess('error'))
   }
 
   changePagination = (page) => {
@@ -94,17 +83,17 @@ class App extends Component {
       .then((elem) => {
         this.setState({
           moviesData: [...elem.results],
-          loading: false,
           pages: page
         })
       })
-      .catch(this.onError)
+      .then(() => this.handleProcess('confirmed'))
+      .catch(() => this.handleProcess('error'))
+
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })
   }
-  // 2
 
   updateRateCard = () => {
     const { sessionId } = this.state
@@ -113,11 +102,17 @@ class App extends Component {
       .then((item) => {
         this.setState({
           ratedMoviesData: [...item],
-          loading: false,
           rate: true
         })
       })
-      .catch(this.onError)
+      .then(() => this.handleProcess('confirmed'))
+      .catch(() => this.handleProcess('error'))
+  }
+
+  handleProcess = (process) => {
+    this.setState({
+      process
+    })
   }
 
   handleTabs = (event) => {
@@ -131,24 +126,24 @@ class App extends Component {
       .then((item) => {
         this.setState({
           moviesData: [...item.results],
-          loading: false,
           rate: false
         })
       })
-      .catch(this.onError)
+      .then(() => this.handleProcess('confirmed'))
+      .catch(() => this.handleProcess('error'))
   }
 
   render() {
     const {
       moviesData,
-      loading,
       error,
       pages,
       genres,
       querySearch,
       rate,
       tab,
-      ratedMoviesData
+      ratedMoviesData,
+      process
     } = this.state
     const searchInput =
       tab === '1' ? (
@@ -164,21 +159,18 @@ class App extends Component {
           tab={tab}
         />
         {searchInput}
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Movies
-            moviesData={moviesData}
-            loading={loading}
-            error={error}
-            genres={genres}
-            changeValueRate={this.changeValueRate}
-            tab={tab}
-            ratedMoviesData={ratedMoviesData}
-          />
-        )}
 
-        {tab === '1' && !error ? (
+        <Movies
+          process={process}
+          moviesData={moviesData}
+          error={error}
+          genres={genres}
+          changeValueRate={this.changeValueRate}
+          tab={tab}
+          ratedMoviesData={ratedMoviesData}
+        />
+
+        {tab === '1' && process === 'confirmed' ? (
           <Paginations
             pages={pages}
             changePagination={this.changePagination}

@@ -1,9 +1,6 @@
 import React from 'react'
-
 import PropTypes from 'prop-types'
-
 import { Button, Descriptions, Rate } from 'antd'
-
 import noImage from './no-image.png'
 
 const CardView = function CardView({
@@ -27,7 +24,6 @@ const CardView = function CardView({
     if (ids.some((elemID) => elemID === el.id)) acc.push(el)
     return acc
   }, [])
-
   const btnGenre = filterG.map((elem) => (
     <Button className="movies__button" type="button" key={elem.id}>
       {elem.name}
@@ -53,7 +49,7 @@ const CardView = function CardView({
             {releaseDate}
           </Descriptions.Item>
         </div>
-        <div className="card__genre">{genres !== 0 ? btnGenre : null}</div>
+        <div className="card__genre">{!genres && btnGenre}</div>
         <div className="card__text">
           <p>
             {overview.length === 0
