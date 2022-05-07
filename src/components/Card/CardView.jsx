@@ -16,10 +16,9 @@ const CardView = function CardView({
   id
 }) {
   const imgUrl = 'https://image.tmdb.org/t/p/w500'
-  const evaluationCard =
-    evaluation === 0 || evaluation.length === 0 ? null : (
-      <EvaluationCard evaluation={evaluation} />
-    )
+  const evaluationCard = evaluation?.length ? null : (
+    <EvaluationCard evaluation={evaluation} />
+  )
   const filterG = genres.reduce((acc, el) => {
     if (ids.some((elemID) => elemID === el.id)) acc.push(el)
     return acc
@@ -29,6 +28,19 @@ const CardView = function CardView({
       {elem.name}
     </Button>
   ))
+  const textSlice = (text, wordsAmount) => {
+    const Arr = text.split(' ')
+    let newText = ''
+    if (text.length === 0) {
+      return `There is no movie description here.`
+    }
+    if (Arr.length > wordsAmount) {
+      newText = `${Arr.slice(0, wordsAmount + 1).join(' ')}...`
+    } else {
+      return text
+    }
+    return newText
+  }
   return (
     <>
       <div className="card__img">
@@ -49,13 +61,9 @@ const CardView = function CardView({
             {releaseDate}
           </Descriptions.Item>
         </div>
-        <div className="card__genre">{!genres && btnGenre}</div>
+        <div className="card__genre">{genres && btnGenre}</div>
         <div className="card__text">
-          <p>
-            {overview.length === 0
-              ? 'there is no description'
-              : `${overview.slice(0, 104)}...`}
-          </p>
+          <p>{textSlice(overview, 18)}</p>
         </div>
         <div className="star">
           <Rate
