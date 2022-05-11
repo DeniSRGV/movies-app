@@ -3,8 +3,8 @@ import { debounce } from 'lodash'
 import Movies from '../Movies'
 import MovieDB from '../../services/MovieDB'
 import Header from '../Header/Header'
-import SearchInput from '../Header/Search/SearchInput'
-import Paginations from '../Footer/Paginations'
+import SearchInput from '../Search/SearchInput'
+import Paginations from '../Paginations/Paginations'
 
 import './App.css'
 
@@ -24,8 +24,14 @@ class App extends Component {
   }
 
   inputSearch = debounce((event) => {
+    let value
+    if (event.target.value !== '') {
+      value = event.target.value
+    } else {
+      return
+    }
     this.setState({
-      querySearch: event.target.value
+      querySearch: value
     })
     this.handleProcess('loading')
     const { querySearch } = this.state
@@ -37,8 +43,8 @@ class App extends Component {
           rate: false
         })
       })
-      .then(() => this.handleProcess('confirmed'))
-      .catch(() => this.handleProcess('error'))
+      .then(this.confirmed)
+      .catch(this.error)
   }, 600)
 
   componentDidMount() {
@@ -47,6 +53,10 @@ class App extends Component {
     this.getNewGuestSession()
   }
 
+  confirmed = () => this.handleProcess('confirmed')
+
+  error = () => this.handleProcess('error')
+
   getNewGuestSession = () => {
     this.MovieService.getGuestSessionNew()
       .then((result) => {
@@ -54,15 +64,13 @@ class App extends Component {
           sessionId: result
         })
       })
-      .then(() => this.handleProcess('confirmed'))
-      .catch(() => this.handleProcess('error'))
+      .then(this.confirmed)
+      .catch(this.error)
   }
 
   changeValueRate = (event, id) => {
     const { sessionId } = this.state
-    this.MovieService.postRate(event, id, sessionId).catch(() =>
-      this.handleProcess('error')
-    )
+    this.MovieService.postRate(event, id, sessionId).catch(this.error)
   }
 
   getGenres = () => {
@@ -72,8 +80,8 @@ class App extends Component {
           genres: [...elem]
         })
       })
-      .then(() => this.handleProcess('confirmed'))
-      .catch(() => this.handleProcess('error'))
+      .then(this.confirmed)
+      .catch(this.error)
   }
 
   changePagination = (page) => {
@@ -86,8 +94,8 @@ class App extends Component {
           pages: page
         })
       })
-      .then(() => this.handleProcess('confirmed'))
-      .catch(() => this.handleProcess('error'))
+      .then(this.confirmed)
+      .catch(this.error)
 
     window.scrollTo({
       top: 0,
@@ -105,8 +113,8 @@ class App extends Component {
           rate: true
         })
       })
-      .then(() => this.handleProcess('confirmed'))
-      .catch(() => this.handleProcess('error'))
+      .then(this.confirmed)
+      .catch(this.error)
   }
 
   handleProcess = (process) => {
@@ -129,8 +137,8 @@ class App extends Component {
           rate: false
         })
       })
-      .then(() => this.handleProcess('confirmed'))
-      .catch(() => this.handleProcess('error'))
+      .then(this.confirmed)
+      .catch(this.error)
   }
 
   render() {

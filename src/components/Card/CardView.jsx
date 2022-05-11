@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { Button, Descriptions, Rate } from 'antd'
 import noImage from './no-image.png'
 
@@ -16,8 +17,15 @@ const CardView = function CardView({
   id
 }) {
   const imgUrl = 'https://image.tmdb.org/t/p/w500'
+  const clazzColor = classNames({
+    card__evaluation: true,
+    'card__evaluation_red': evaluation <= 3,
+    'card__evaluation_orange': evaluation > 3 && evaluation <= 5,
+    'card__evaluation_yellow': evaluation > 5 && evaluation <= 7,
+    'card__evaluation_green': evaluation > 7
+  })
   const evaluationCard = evaluation?.length ? null : (
-    <EvaluationCard evaluation={evaluation} />
+    <span className={clazzColor}>{evaluation}</span>
   )
   const filterG = genres.reduce((acc, el) => {
     if (ids.some((elemID) => elemID === el.id)) acc.push(el)
@@ -78,20 +86,6 @@ const CardView = function CardView({
     </>
   )
 }
-const EvaluationCard = function EvaluationCard({ evaluation }) {
-  let clazzColor = 'card__evaluation'
-  if (evaluation <= 3) {
-    clazzColor += '	card__evaluation_red'
-  } else if (evaluation > 3 && evaluation <= 5) {
-    clazzColor += ' card__evaluation_orange'
-  } else if (evaluation > 5 && evaluation <= 7) {
-    clazzColor += ' card__evaluation_yellow'
-  } else {
-    clazzColor += ' card__evaluation_green'
-  }
-
-  return <span className={clazzColor}>{evaluation}</span>
-}
 
 CardView.defaultProps = {
   title: 'absent title',
@@ -119,10 +113,4 @@ CardView.propTypes = {
   id: PropTypes.number
 }
 
-EvaluationCard.defaultProps = {
-  evaluation: 0
-}
-EvaluationCard.propTypes = {
-  evaluation: PropTypes.number
-}
 export default CardView
